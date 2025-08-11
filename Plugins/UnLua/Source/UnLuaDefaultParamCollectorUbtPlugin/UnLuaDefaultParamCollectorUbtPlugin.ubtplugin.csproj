@@ -3,7 +3,14 @@
   <Import Project="$(EngineDir)\Source\Programs\Shared\UnrealEngine.csproj.props" />
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <BuildVersionContent Condition="Exists('$(EngineDir)\Build\Build.version')">$([System.IO.File]::ReadAllText('$(EngineDir)\Build\Build.version'))</BuildVersionContent>
+    <EngineMajorVersion Condition="'$(BuildVersionContent)' != ''">$([System.Text.RegularExpressions.Regex]::Match($(BuildVersionContent), '"MajorVersion": (\d+)').Groups[1].Value)</EngineMajorVersion>
+    <EngineMinorVersion Condition="'$(BuildVersionContent)' != ''">$([System.Text.RegularExpressions.Regex]::Match($(BuildVersionContent), '"MinorVersion": (\d+)').Groups[1].Value)</EngineMinorVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework Condition="'$(EngineMajorVersion)' == '' Or ('$(EngineMajorVersion)' &lt; '5') Or ('$(EngineMajorVersion)' == '5' And '$(EngineMinorVersion)' &lt; '6')">net6.0</TargetFramework>
+    <TargetFramework Condition="'$(EngineMajorVersion)' >= '5' And '$(EngineMinorVersion)' >= '6'">net8.0</TargetFramework>
     <Configuration Condition=" '$(Configuration)' == '' ">Development</Configuration>
     <OutputType>Library</OutputType>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>

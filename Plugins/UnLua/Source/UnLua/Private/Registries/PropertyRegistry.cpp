@@ -421,7 +421,11 @@ namespace UnLua
             };
             const auto StructProperty = new FStructProperty(PropertyCollector, Params);
             StructProperty->Struct = ScriptStruct;
+#if UE_VERSION_OLDER_THAN(5, 3, 0)
+            StructProperty->ElementSize = ScriptStruct->PropertiesSize;
+#else
             StructProperty->SetElementSize(ScriptStruct->PropertiesSize);
+#endif
             Property = StructProperty;
 #endif
         }
