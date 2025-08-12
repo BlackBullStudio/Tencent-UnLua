@@ -93,5 +93,25 @@ public class UnLuaEditor : ModuleRules
                 "AnimationBlueprintEditor",
             }
         );
+
+        if (Target.bGenerateProjectFiles)
+        {
+#if UE_5_5_OR_LATER
+            string TargetFramework = "net8.0";
+#else
+            string TargetFramework = "net6.0";
+#endif
+
+            string PropsPath = Path.Combine(ModuleDirectory, "../UnLuaDefaultParamCollectorUbtPlugin/TargetFramework.ubtplugin.csproj.props");
+            string PropsContent = $@"<?xml version=""1.0"" encoding=""utf-8""?>
+<Project>
+  <PropertyGroup>
+    <TargetFramework>{TargetFramework}</TargetFramework>
+  </PropertyGroup>
+</Project>";
+            
+            File.WriteAllText(PropsPath, PropsContent);
+        }
+
     }
 }
