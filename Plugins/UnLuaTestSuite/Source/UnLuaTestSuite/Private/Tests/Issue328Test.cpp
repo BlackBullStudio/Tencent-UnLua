@@ -35,7 +35,7 @@ struct FUnLuaTest_Issue328 : FUnLuaTestBase
         const FURL URL;
         World->InitializeActorsForPlay(URL);
         World->BeginPlay();
-        World->bBegunPlay = true;
+        World->SetBegunPlay(true);
         
         const auto ActorClass = LoadClass<AUnLuaTestActor>(World, TEXT("/UnLuaTestSuite/Tests/Regression/Issue328/BP_UnLuaTestActor_Issue328.BP_UnLuaTestActor_Issue328_C"));
         const auto Actor = (AUnLuaTestActor*)World->SpawnActor(ActorClass);
