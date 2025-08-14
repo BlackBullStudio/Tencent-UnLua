@@ -21,3 +21,5 @@ IOS/
 /Plugins/Developer/RiderLink
 /Benchmark
 /Plugins/UnLua/Source/UnLuaDefaultParamCollectorUbtPlugin/obj
+*.props
+.vsconfig
