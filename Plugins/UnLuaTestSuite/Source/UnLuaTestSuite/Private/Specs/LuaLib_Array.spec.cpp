@@ -19,7 +19,7 @@
 
 #if WITH_DEV_AUTOMATION_TESTS
 
-BEGIN_DEFINE_SPEC(FUnLuaLibArraySpec, "UnLua.API.TArray", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::ApplicationContextMask)
+BEGIN_DEFINE_SPEC(FUnLuaLibArraySpec, "UnLua.API.TArray", EAutomationTestFlags::ProductFilter | EAutomationTestFlags_ApplicationContextMask)
     TSharedPtr<UnLua::FLuaEnv> Env;
     lua_State* L;
 END_DEFINE_SPEC(FUnLuaLibArraySpec)
@@ -72,8 +72,8 @@ void FUnLuaLibArraySpec::Define()
 
             const auto& Array = *(TArray<FString>*)ScriptArray;
             TEST_EQUAL(Array.Num(), 2);
-            TEST_EQUAL(Array[0], "A");
-            TEST_EQUAL(Array[1], "B");
+            TEST_EQUAL(Array[0], FString("A"));
+            TEST_EQUAL(Array[1], FString("B"));
         });
 
         It(TEXT("构造TArray<bool>"), EAsyncExecution::TaskGraphMainThread, [this]

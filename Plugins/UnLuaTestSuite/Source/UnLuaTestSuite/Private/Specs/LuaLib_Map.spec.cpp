@@ -19,7 +19,7 @@
 
 #if WITH_DEV_AUTOMATION_TESTS
 
-BEGIN_DEFINE_SPEC(FUnLuaLibMapSpec, "UnLua.API.TMap", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::ApplicationContextMask)
+BEGIN_DEFINE_SPEC(FUnLuaLibMapSpec, "UnLua.API.TMap", EAutomationTestFlags::ProductFilter | EAutomationTestFlags_ApplicationContextMask)
     TSharedPtr<UnLua::FLuaEnv> Env;
     lua_State* L;
 END_DEFINE_SPEC(FUnLuaLibMapSpec)
@@ -66,8 +66,8 @@ void FUnLuaLibMapSpec::Define()
             Env->DoString(Chunk);
             const auto Map = (TMap<FString, FString>*)UnLua::GetMap(L, -1);
             TEST_EQUAL(Map->Num(), 2);
-            TEST_EQUAL(Map->operator[]("A"), "Apple");
-            TEST_EQUAL(Map->operator[]("B"), "Banana");
+            TEST_EQUAL(Map->operator[]("A"), FString("Apple"));
+            TEST_EQUAL(Map->operator[]("B"), FString("Banana"));
         });
 
         It(TEXT("构造TMap<FVector,bool>"), EAsyncExecution::TaskGraphMainThread, [this]
